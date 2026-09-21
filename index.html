@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Marisabel 💛 — Flores Amarillas</title>
+    <!-- Fuentes elegantes de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #ffd166;
+            --accent: #ffb703;
+            --gold: #d4a373;
+            --dark-text: #2b2d42;
+            --card-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff7d6 0%, #ffe899 50%, #fff0b3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Pantalla de Bienvenida / Bloqueo Inicial para el Audio */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #fff4cc 0%, #ffe066 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(212, 163, 115, 0.3);
+            max-width: 350px;
+            width: 100%;
+            border: 2px solid #ffb703;
+        }
+
+        .welcome-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+            animation: latidoWelcome 1.5s infinite;
+        }
+
+        @keyframes latidoWelcome {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .welcome-card h2 {
+            color: #3d2612;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-card p {
+            color: #8c6d46;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(251, 133, 0, 0.4);
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-start:active {
+            transform: scale(0.95);
+        }
+
+        /* Lluvia de pétalos al FRENTE de la pantalla */
+        .petalo {
+            position: fixed;
+            top: -30px;
+            pointer-events: none;
+            user-select: none;
+            z-index: 100;
+            animation: caerPetalo linear infinite;
+        }
+
+        @keyframes caerPetalo {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) scale(1.2);
+                opacity: 0.2;
+            }
+        }
+
+        /* Contenedor Principal tipo Glassmorphism */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(212, 163, 115, 0.3),
+                        0 0 20px rgba(255, 215, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
+            padding: 25px 20px;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            animation: entradaCard 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes entradaCard {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 0.99; transform: translateY(0) scale(1); }
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(251, 133, 0, 0.3);
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            color: #3d2612;
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #8c6d46;
+            margin-bottom: 20px;
+        }
+
+        /* Ramo de Tulipanes */
+        .ramo-wrapper {
+            position: relative;
+            margin: 0 auto 22px auto;
+            max-width: 280px;
+            border-radius: 22px;
+            padding: 8px;
+            background: linear-gradient(145deg, #ffffff, #fff3c4);
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.8),
+                        0 10px 25px rgba(0,0,0,0.08);
+            animation: flotar 4s ease-in-out infinite alternate;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .ramo-wrapper:active {
+            transform: scale(0.95) rotate(-2deg);
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-7px) rotate(1.2deg); }
+        }
+
+        .ramo-img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            display: block;
+            pointer-events: none;
+        }
+
+        .tap-hint {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #d4a373;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* Reproductor de Audio */
+        .music-player {
+            background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+            border: 1.5px solid #ffe082;
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 20px rgba(255, 183, 3, 0.12);
+        }
+
+        .music-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .music-icon {
+            font-size: 22px;
+            background: #ffe58f;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            animation: pulso 2s infinite;
+        }
+
+        @keyframes pulso {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .music-text h4 {
+            font-size: 13px;
+            color: #3d2612;
+            font-weight: 600;
+        }
+
+        .music-text p {
+            font-size: 11px;
+            color: #a38258;
+        }
+
+        audio {
+            width: 100%;
+            height: 36px;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        /* ==================== SOBRE / CARTA INTERACTIVA ==================== */
+        .envelope-section {
+            margin-bottom: 25px;
+            perspective: 1000px;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            background: #fefae0;
+            border: 2px solid #dda15e;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(212, 163, 115, 0.25);
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            padding: 20px;
+        }
+
+        .envelope-closed {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px 10px;
+            transition: opacity 0.4s ease;
+        }
+
+        .envelope-seal {
+            font-size: 40px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+            animation: latido 1.8s infinite;
+        }
+
+        @keyframes latido {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .envelope-text {
+            font-weight: 600;
+            color: #bc6c25;
+            font-size: 14px;
+        }
+
+        .envelope-subtext {
+            font-size: 11px;
+            color: #dda15e;
+        }
+
+        .letter-content {
+            display: none;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .envelope-wrapper.open {
+            background: #ffffff;
+            border-color: #ffb703;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            cursor: default;
+        }
+
+        .envelope-wrapper.open .envelope-closed {
+            display: none;
+        }
+
+        .envelope-wrapper.open .letter-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .letter-content p {
+            font-size: 14px;
+            color: #4a4e69;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .poema-highlight {
+            font-family: 'Caveat', cursive;
+            font-size: 22px;
+            color: #b56576;
+            background: #fff0f3;
+            padding: 12px 15px;
+            border-radius: 14px;
+            line-height: 1.3;
+            margin: 14px 0;
+            border-left: 3px solid #ffb703;
+        }
+
+        .firma {
+            text-align: right;
+            font-weight: 600;
+            color: #d4a373;
+            font-size: 15px;
+        }
+
+        /* Galería de Fotos de Marisabel */
+        .fotos-section {
+            margin-bottom: 22px;
+        }
+
+        .fotos-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #3d2612;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .fotos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .foto-card {
+            background: #ffffff;
+            padding: 8px 8px 12px 8px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border: 1px solid #ffe899;
+            transition: transform 0.3s ease;
+        }
+
+        .foto-card:nth-child(1) {
+            transform: rotate(-2deg);
+        }
+
+        .foto-card:nth-child(2) {
+            transform: rotate(2deg);
+        }
+
+        .foto-card:hover {
+            transform: scale(1.04) rotate(0deg);
+            z-index: 3;
+        }
+
+        .foto-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .foto-caption {
+            font-family: 'Caveat', cursive;
+            font-size: 16px;
+            color: #8c6d46;
+            margin-top: 6px;
+        }
+
+        /* Botón de Besos */
+        .btn-action {
+            width: 100%;
+            background: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(251, 133, 0, 0.35);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-action:active {
+            transform: scale(0.96);
+            box-shadow: 0 4px 12px rgba(251, 133, 0, 0.2);
+        }
+
+        /* Emojis flotantes animados al FRENTE */
+        .floating-emoji {
+            position: fixed;
+            font-size: 32px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1001;
+            animation: explosion 2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        @keyframes explosion {
+            0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(0deg); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-220px) scale(1.5) rotate(25deg); }
+        }
+
+        /* Pétalos volantes de la explosión del ramo al FRENTE */
+        .petalo-explosion {
+            position: fixed;
+            font-size: 26px;
+            pointer-events: none;
+            user-select: none;
+            z-index: 1002;
+            animation: volarCaer 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes volarCaer {
+            0% { opacity: 1; transform: translate(0, 0) scale(0.6) rotate(0deg); }
+            40% { opacity: 1; transform: translate(var(--vx), -80px) scale(1.2) rotate(180deg); }
+            100% { opacity: 0; transform: translate(var(--vx), 300px) scale(0.8) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA DE BIENVENIDA (Inicia la música y desbloquea el navegador) -->
+    <div id="welcome-screen">
+        <div class="welcome-card">
+            <div class="welcome-icon">🌻</div>
+            <h2>Para Marisabel 💛</h2>
+            <p>Tienes una sorpresa especial esperándote.</p>
+            <button class="btn-start" onclick="iniciarExperiencia()">Abrir Sorpresa ✨</button>
+        </div>
+    </div>
+
+    <!-- Lluvia de pétalos background/foreground -->
+    <div id="petalos-container"></div>
+
+    <!-- Contenedor Cristal de la Carta -->
+    <div class="glass-card">
+        
+        <span class="badge">Especial 21 Septiembre</span>
+        <h1>Para Marisabel 💛</h1>
+        <p class="subtitle">Tus Flores Amarillas e Inolvidables</p>
+
+        <!-- Ramo Interactivo al Tocar -->
+        <div class="ramo-wrapper" onclick="explotarPetalos(event)">
+            <img src="tulipanes.png" alt="Ramo de Tulipanes" class="ramo-img">
+            <span class="tap-hint">✨ Tócame ✨</span>
+        </div>
+
+        <!-- Reproductor de Audio -->
+        <div class="music-player">
+            <div class="music-info">
+                <div class="music-icon">🎻</div>
+                <div class="music-text">
+                    <h4>Dandelions</h4>
+                    <p>Nuestra canción especial</p>
+                </div>
+            </div>
+            <audio id="audioMusica" controls preload="metadata">
+                <source src="musica.m4a" type="audio/mp4">
+                <source src="musica.mp3" type="audio/mpeg">
+                Tu navegador no soporta audio.
+            </audio>
+        </div>
+
+        <!-- SOBRE / CARTA DE AMOR INTERACTIVA -->
+        <div class="envelope-section">
+            <div class="envelope-wrapper" id="envelope" onclick="abrirCarta()">
+                <!-- Estado Cerrado -->
+                <div class="envelope-closed">
+                    <div class="envelope-seal">💌</div>
+                    <div class="envelope-text">Tienes una carta secreta</div>
+                    <div class="envelope-subtext">Toca aquí para abrir el sobre</div>
+                </div>
+
+                <!-- Estado Abierto (Carta interior) -->
+                <div class="letter-content">
+                    <p>Mi amor, eres el mejor regalo que Dios me ha dado, eres lo mejor de mi vida. Me gustaría pasar el resto de mis días contigo.</p>
+                    
+                    <div class="poema-highlight">
+                        Eres un regalo de Dios<br>
+                        Mi mejor flor<br>
+                        Sé que no es mucho<br>
+                        Pero te doy esto con amor.<br><br>
+                        Quisiera que el tiempo se detuviera<br>
+                        Para pasarlo contigo<br>
+                        No importa el lugar<br>
+                        Si estás tú será bonito.
+                    </div>
+
+                    <p class="firma">Te amo mucho ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galería de Fotos de Marisabel -->
+        <div class="fotos-section">
+            <div class="fotos-title">✨ Eres hermosa mi pasita ✨</div>
+            <div class="fotos-grid">
+                <div class="foto-card">
+                    <img src="foto1.jpg" alt="Marisabel" class="foto-img">
+                    <div class="foto-caption">Mi princesa 👑</div>
+                </div>
+                <div class="foto-card">
+                    <img src="foto2.jpg" alt="Marisabel" class="foto-img">
+                    <div class="foto-caption">Mi cielo 💛</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de Sorpresa/Besos -->
+        <button class="btn-action" onclick="lanzarSorpresa()">
+            <span>💋</span> Toca aquí para recibir besitos de tu amado
+        </button>
+
+    </div>
+
+    <script>
+        // Función al presionar el botón de bienvenida inicial
+        function iniciarExperiencia() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const audio = document.getElementById('audioMusica');
+            
+            // Reproducir la música de forma automática con el toque
+            audio.play().catch(error => console.log("Audio play blocked:", error));
+            
+            // Ocultar pantalla de bienvenida
+            welcomeScreen.classList.add('hidden');
+            
+            // Iniciar lluvia de pétalos
+            iniciarPetalos();
+        }
+
+        // Función para abrir la carta
+        function abrirCarta() {
+            const envelope = document.getElementById('envelope');
+            if (!envelope.classList.contains('open')) {
+                envelope.classList.add('open');
+                
+                const elementos = ['✨', '💛', '💌', '🌸', '💖'];
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const el = document.createElement('div');
+                        el.classList.add('floating-emoji');
+                        el.innerText = elementos[Math.floor(Math.random() * elementos.length)];
+                        el.style.left = (Math.random() * 60 + 20) + 'vw';
+                        el.style.top = (Math.random() * 20 + 40) + 'vh';
+                        document.body.appendChild(el);
+
+                        setTimeout(() => { el.remove(); }, 2000);
+                    }, i * 60);
+                }
+            }
+        }
+
+        // Lluvia de fondo y frente
+        function iniciarPetalos() {
+            const container = document.getElementById('petalos-container');
+            const simbolos = ['🌻', '🌼', '✨', '💛', '🌸'];
+
+            setInterval(() => {
+                const petalo = document.createElement('div');
+                petalo.classList.add('petalo');
+                petalo.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                petalo.style.left = Math.random() * 100 + 'vw';
+                petalo.style.fontSize = (Math.random() * 12 + 16) + 'px';
+                petalo.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                
+                container.appendChild(petalo);
+
+                setTimeout(() => { petalo.remove(); }, 7000);
+            }, 400);
+        }
+
+        // Explosión de pétalos al tocar el ramo
+        function explotarPetalos(event) {
+            const petalos = ['💛', '🌻', '🌼', '✨', '💛', '🌸'];
+            const posX = event.clientX || window.innerWidth / 2;
+            const posY = event.clientY || window.innerHeight / 3;
+
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.classList.add('petalo-explosion');
+                p.innerText = petalos[Math.floor(Math.random() * petalos.length)];
+                p.style.left = posX + 'px';
+                p.style.top = posY + 'px';
+                
+                const velX = (Math.random() - 0.5) * 300 + 'px';
+                p.style.setProperty('--vx', velX);
+
+                document.body.appendChild(p);
+
+                setTimeout(() => { p.remove(); }, 2500);
+            }
+        }
+
+        // Besos al presionar el botón inferior
+        function lanzarSorpresa() {
+            const elementos = ['💋', '💛', '✨', '💖', '💐', '👑'];
+            
+            for (let i = 0; i < 22; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.classList.add('floating-emoji');
+                    el.innerText = elementos[Math.floor(Math.random() * elementos.length)];
+                    el.style.left = (Math.random() * 80 + 10) + 'vw';
+                    el.style.top = (Math.random() * 30 + 50) + 'vh';
+                    
+                    document.body.appendChild(el);
+
+                    setTimeout(() => { el.remove(); }, 2000);
+                }, i * 70);
+            }
+        }
+    </script>
+</body>
+</html>
